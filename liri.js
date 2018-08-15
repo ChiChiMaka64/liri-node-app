@@ -6,7 +6,7 @@ var Spotify = require("node-spotify-api");
 // add code required to import the keys.js file and store it in a variable. ????????????????????????????????????
 var spotify = new Spotify(keys.spotify);
 var twitter = new Twitter(keys.twitter);
-var song_name = process.argv[3];
+//var song_name = process.argv[3];
 var tweet = process.argv[3];
 var doIT = process.argv[3];
 
@@ -35,7 +35,7 @@ if (command == 'my-tweets') {
 }
 if (command == 'spotify-this-song') {
     console.log(command);
-    spotifythissong(song_name);
+    spotifythissong(name);
 }
 
 if (command == 'do-what-it-says') {
@@ -64,7 +64,6 @@ function mytweets(tweet) {
 
     });
 }
-function spotifythissong(song_name) {
     /*
     This will show the following information about the song in your terminal/bash window
     
@@ -77,15 +76,40 @@ function spotifythissong(song_name) {
     
     If no song is provided then your program will default to "The Sign" by Ace of Base.
     */
-    spotify.search({ type: 'track', query: song_name, limit: 5 }, function (error, response) {
-        console.log("Reaponse is:" + response);
-        var jsonData = JSON.parse(response);
-         console.log("Response is:" +jsonData);
-
+   function getSpotify() {
+    var spotify = new Spotify({
+        id: '59691bb27c1146f885f57a6b4d49b092',
+        secret: 'b578442aeba344339064a8ce9d217fe3'
     });
+ 
+    //search function
+    spotify.search({
+        type: 'track',
+        query: requestItem
+    }, function (error, data) {
+        if (error) {
+            return console.log('Error ocurred: ' + error);
+        }
+        console.log("Song name: " + data.tracks.items[0].name);
+ 
+        //pathway into JSON package set to variable
+        var songArtists = data.tracks.items[0].artists;
+ 
+        //stores in empty string
+        var artistString = "";
+ 
+        for (var i = 0; i < songArtists.length; i++) {
+            artistString += songArtists[i].name + " ";
+        }
+        console.log("Artist: " + artistString);
+        console.log("Song name: ");
+        console.log("Link: ");
+        console.log("Album: " + data.tracks.items[0].album.name);
+    });
+ }
 
 
-}
+
 
 function moviethis(movie_name) {
     // You'll use the request package to retrieve data from the OMDB API. Like all of the in-class activities, the OMDB API requires an API key. You may use trilogy.
