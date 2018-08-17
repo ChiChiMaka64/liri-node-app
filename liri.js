@@ -45,7 +45,7 @@ if (command == 'do-what-it-says') {
 
 function mytweets(tweet) {
     var params = {
-        screen_name: "Drumslco"
+        screen_name: "LCO_Drums"
     }
     twitter.get('statuses/user_timeline', params, function (error, tweets, response) {
         console.log(tweets);
